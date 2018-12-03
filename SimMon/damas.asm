@@ -161,7 +161,7 @@ main:
 ;	call inputPalavra
 	;call printPalavra	; Testa se a palavra foi digitada corretamente!!
 
-;	call DesForca
+	call DesInicio
 	
 ;	loop:
 ;		call inputLetra
@@ -215,7 +215,83 @@ ImprimeStr:	;  Rotina de Impresao de Mensagens:    r0 = Posicao da tela que o pr
 	
 ;------------------------	
 	
+;********************************************************
+;                   DESENHA INICIO
+;********************************************************
+DesInicio:
+	push fr		; Protege o registrador de flags
+	push r0  
+	push r1  
+	push r2  
+	push r3  
 	
+	loadn r2, #8	;; Distancia entre posicoes na horizontal
+	loadn r1, #555  ;; Representação de uma peca(pessa) verde  / 43 ('+') + 512 (verde) = 555 /
+	loadn r0, #166	;; Primeira posicao de linha
+	outchar r1, r0 	;;escreve o + na posicao 166
+	add r0, r0, r2  ;;coloca em r1(1º) o 8(que tava no r3) mais o r1 -->anda pra a casa acessivel ao lado r1 = 174
+	outchar r1, r0  ;;desenha o ponto de novo
+	add r0, r0, r2  ;;r1 = 182
+	outchar r1, r0  ;;desenha o ponto de novo
+	add r0, r0, r2	;;r1 = 190
+	outchar r1, r0  ;;desenha o ponto de novo
+	
+	
+	loadn r0, #290	;; Segunda posicao de linha
+	outchar r1, r0 
+	add r0, r0, r2  
+	outchar r1, r0  
+	add r0, r0, r2  
+	outchar r1, r0  
+	add r0, r0, r2
+	outchar r1, r0 
+
+	loadn r0, #406	;; Terceira posicao de linha
+	outchar r1, r0 
+	add r0, r0, r2  
+	outchar r1, r0  
+	add r0, r0, r2  
+	outchar r1, r0  
+	add r0, r0, r2
+	outchar r1, r0 
+	
+	loadn r1, #2347  ;; Representação de uma peca(pessa) vermelha  / 43 ('+') + 2304 (vermelha) = 2347 /
+	loadn r0, #770
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0 
+	
+	loadn r0, #886
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0 
+	
+	loadn r0, #1010
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0
+	add r0, r0, r2
+	outchar r1, r0 
+
+	
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	pop fr
+	rts
+	
+;----------------
 
 ;********************************************************
 ;                       APAGA TELA
@@ -283,32 +359,35 @@ ImprimeTela: 	;  Rotina de Impresao de Cenario na Tela Inteira
 
 
 ; Declara e preenche tela linha por linha (40 caracteres):
+;		Posicoes
+;  A partir da telaLinha4(160) 6-14-22-30  a cada 240        
+;  A partir da telaLinha7(280) 10-18-26-34 a cada 240	
 tela1Linha0  : string "                                        " 
-tela1Linha1  : string "                                        " 
+tela1Linha1  : string "                                        " ;  Inicio das linhas
 tela1Linha2  : string "     ___ ___ ___ ___ ___ ___ ___ ___    "
 tela1Linha3  : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha4  : string "    | + | , |   |   |   |   |   |   |   "
+tela1Linha4  : string "    |   |   |   |   |   |   |   |   |   " ; 1 -	166
 tela1Linha5  : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha6  : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha7  : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha7  : string "    |   |   |   |   |   |   |   |   |   " ; 2 - 	290
 tela1Linha8  : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha9  : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha10 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha10 : string "    |   |   |   |   |   |   |   |   |   " ; 3 -	406
 tela1Linha11 : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha12 : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha13 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha13 : string "    |   |   |   |   |   |   |   |   |   " ; 4 - 	530
 tela1Linha14 : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha15 : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha16 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha16 : string "    |   |   |   |   |   |   |   |   |   " ; 5 -	646
 tela1Linha17 : string "    |___|___|___|___|___|___|___|___|   "
-tela1Linha18 : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha19 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha18 : string "    |   |   |   |   |   |   |   |   |   " 
+tela1Linha19 : string "    |   |   |   |   |   |   |   |   |   " ; 6 -	770
 tela1Linha20 : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha21 : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha22 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha22 : string "    |   |   |   |   |   |   |   |   |   " ; 7 -	886
 tela1Linha23 : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha24 : string "    |   |   |   |   |   |   |   |   |   "
-tela1Linha25 : string "    |   |   |   |   |   |   |   |   |   "
+tela1Linha25 : string "    |   |   |   |   |   |   |   |   |   " ; 8 -	1010
 tela1Linha26 : string "    |___|___|___|___|___|___|___|___|   "
 tela1Linha27 : string "                                        "
 tela1Linha28 : string "                                        "
